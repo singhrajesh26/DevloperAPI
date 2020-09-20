@@ -14,7 +14,7 @@ import org.jbehave.core.model.ExamplesTable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-
+import org.jbehave.core.annotations.Named;
 import com.test.jbehave.main.Base;
 import com.test.jbehave.main.Driver;
 import com.test.jbehave.pages.HomePage;
@@ -37,24 +37,24 @@ public class MySteps extends Base {
 		}
 
 		@When("use click on menu link")
-		public void windowhandle() {
-			checkIfPageIsLoaded("Solutions");
-			checkIfPageIsLoaded("APIs");
-			checkIfPageIsLoaded("New & Experimental");
-			checkIfPageIsLoaded("Partner Programs");
-			checkIfPageIsLoaded("Case Studies");
-			checkIfPageIsLoaded("Blog");
-			checkIfPageIsLoaded("Support");
-			checkIfPageIsLoaded("Search");
-			checkIfPageIsLoaded("Sign Up");
-			checkIfPageIsLoaded("Log In");
+		public void windowhandle() throws InterruptedException {
+			
+			  checkIfPageIsLoaded("Solutions"); checkIfPageIsLoaded("APIs");
+			  checkIfPageIsLoaded("New & Experimental");
+			  checkIfPageIsLoaded("Partner Programs"); checkIfPageIsLoaded("Case Studies");
+			  checkIfPageIsLoaded("Blog"); checkIfPageIsLoaded("Support");
+			  checkIfPageIsLoaded("Search"); checkIfPageIsLoaded("Sign Up");
+			  checkIfPageIsLoaded("Log In");
+			 
 			
 			
 		}
 		
 		@Then("user able to validate page is loaded")
-		public void checkIfPageIsLoaded(String link)
+		public void checkIfPageIsLoaded(String link) throws InterruptedException
 		{
+			
+			Thread.sleep(1000);
 			try {
 				WebElement linkToClick=Driver.driver.findElement(By.xpath("//a[text()='"+link+"']"));
 				linkToClick.click();
@@ -75,11 +75,32 @@ public class MySteps extends Base {
 			
 		}
 				    
-	   @Then("user able to validate page is loaded: $examplesTable")
-	   public void validateLink(ExamplesTable examplesTable) {
-			link = examplesTable.getRow(0);
+		/*
+		 * @Then("user able to validate page is loaded: $examplesTable") public void
+		 * validateLink(ExamplesTable examplesTable) { link = examplesTable.getRow(0);
+		 * try { WebElement
+		 * linkToClick=Driver.driver.findElement(By.xpath("//a[text()='"+link+"']"));
+		 * linkToClick.click(); String pageLoadStatus; do {
+		 * 
+		 * JavascriptExecutor js = (JavascriptExecutor) Driver.driver;
+		 * 
+		 * pageLoadStatus = (String)js.executeScript("return document.readyState");
+		 * 
+		 * } while ( !pageLoadStatus.equals("complete") );
+		 * 
+		 * System.out.println(link+ " Page is loaded.");
+		 * 
+		 * } catch (Exception e) { System.out.println(link+ " Page is not loaded "+ e);
+		 * }
+		 * 
+		 * }
+		 */
+
+		@Then("user able to validate if $page is loaded") 
+		public void validateLink(@Named("page") String page) {
+			
 			try {
-				WebElement linkToClick=Driver.driver.findElement(By.xpath("//a[text()='"+link+"']"));
+				WebElement linkToClick=Driver.driver.findElement(By.xpath("//a[text()='"+page+"']"));
 				linkToClick.click();
 				String  pageLoadStatus;
 				do {
@@ -90,12 +111,13 @@ public class MySteps extends Base {
 
 					} while ( !pageLoadStatus.equals("complete") );
 				
-				System.out.println(link+ " Page is loaded.");
+				System.out.println(page+ " Page is loaded.");
 				
 			} catch (Exception e) {
-				System.out.println(link+ " Page is not loaded "+ e);
+				System.out.println(page+ " Page is not loaded "+ e);
 			}
 			
+			
 		}
-
+		
 }

@@ -1,5 +1,5 @@
 Narrative:
-In order to log in into Gmail
+In order to log in into
 As a user
 I want to make sure that log in page works as expected 
 
@@ -22,7 +22,8 @@ Meta:
 
 Given home mc page https://developer.mastercard.com/account/log-in
 When use click on menu link
-Then user able to validate page is loaded:
+Then user able to validate if page is loaded
+Examples:
 |page|
 |Solutions|
 |APIs|

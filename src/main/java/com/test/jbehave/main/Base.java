@@ -1,5 +1,7 @@
 package com.test.jbehave.main;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeScenario;
 
@@ -12,11 +14,16 @@ public class Base {
 	@BeforeScenario
 	public void initialization() {
 		Driver.init();
+		Driver.driver.manage().window().maximize();
+		Driver.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		//Driver.driver.manage().setSpeed(Speed.SLOW);
 	}
 
-	@AfterScenario
-	public void cleanup() {
-		Driver.tearDown();
-	}
-
+	
+	  @AfterScenario 
+	  public void cleanup() 
+	  {
+		  Driver.tearDown();
+	   }
+	 
 }
